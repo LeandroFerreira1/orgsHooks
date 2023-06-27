@@ -1,15 +1,28 @@
-import React from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 
+import Estrelas from '../../../componentes/Estrelas';
 
-export default function Produtor ({nome, imagem, distancia, estrela}) {
-    return <View style={estilos.cartao}>
-        <Image source={imagem} style={estilos.imagem} accessibilitylabel={nome}></Image>
-        <View style={estilos.informacoes} >
-            <Text style={estilos.nome}>{nome}</Text>
-            <Text style={estilos.distancia}>{distancia}</Text>
+export default function Produtor({ nome, imagem, distancia, estrelas }) {
+    const [ selecionado, setSelecionado ] = useState(false);
+
+    return <TouchableOpacity 
+            style={estilos.cartao}
+            onPress={() => setSelecionado(!selecionado)}
+        >
+        <Image source={imagem} style={estilos.imagem} accessibilityLabel={nome} />
+        <View style={estilos.informacoes}>
+            <View>
+                <Text style={estilos.nome}>{ nome }</Text>
+                <Estrelas 
+                    quantidade={estrelas}
+                    editavel={selecionado}
+                    grande={selecionado}
+                />
+            </View>
+            <Text style={estilos.distancia}>{ distancia }</Text>
         </View>
-        </View>
+    </TouchableOpacity>
 }
 
 const estilos = StyleSheet.create({
@@ -18,12 +31,14 @@ const estilos = StyleSheet.create({
         marginVertical: 8,
         marginHorizontal: 16,
         borderRadius: 6,
-        flexDirection: 'row',
-        //android
+        flexDirection: "row",
+
+        // Android
         elevation: 4,
-        //ios
+
+        // iOS
         shadowColor: '#000',
-        shadowOffset:{
+        shadowOffset: {
             width: 0,
             height: 2,
         },
@@ -40,7 +55,7 @@ const estilos = StyleSheet.create({
     informacoes: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
         marginLeft: 8,
         marginVertical: 16,
         marginRight: 16,
@@ -53,5 +68,5 @@ const estilos = StyleSheet.create({
     distancia: {
         fontSize: 12,
         lineHeight: 19,
-    }
+    },
 });
